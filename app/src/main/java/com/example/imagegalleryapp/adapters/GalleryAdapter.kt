@@ -1,6 +1,7 @@
 package com.example.imagegalleryapp.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.imagegalleryapp.FullScreenActivity
 
 class GalleryAdapter(var context: Context, var arrayList: MutableList<String>) : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
@@ -46,5 +48,14 @@ class GalleryAdapter(var context: Context, var arrayList: MutableList<String>) :
     inner class GalleryViewHolder(view: View): RecyclerView.ViewHolder(view){
         val imageView: ImageView = view.findViewById(com.example.imagegalleryapp.R.id.imgViewItem)
         val pb: ProgressBar = view.findViewById(com.example.imagegalleryapp.R.id.pbItem)
+
+        init {
+            imageView.setOnClickListener () {
+                val intent = Intent(context, FullScreenActivity::class.java)
+                intent.putStringArrayListExtra("list", ArrayList(arrayList))
+                intent.putExtra("position", absoluteAdapterPosition)
+                context.startActivity(intent)
+            }
+        }
     }
 }
